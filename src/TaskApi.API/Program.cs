@@ -11,8 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Configure Database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var databaseProvider = builder.Configuration.GetValue<string>("DatabaseProvider");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    // Explicitly check for SQLite provider or .db file extension in connection string
+    if (databaseProvider?.Equals("SQLite", StringComparison.OrdinalIgnoreCase) == true || 
+        (builder.Environment.IsDevelopment() && connectionString?.EndsWith(".db", StringComparison.OrdinalIgnoreCase) == true))
+    {
+        options.UseSqlite(connectionString);
+    }
+    else
+    {
+        options.UseSqlServer(connectionString);
+    }
+});
 
 // Register repositories
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
@@ -24,7 +38,7 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new()
     {
         Title = "Task Management API",
         Version = "v1",

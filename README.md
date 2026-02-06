@@ -1,6 +1,6 @@
 # Task-Api-Management
 
-A Task Management Web API built with .NET 8 following Clean Architecture principles.
+A Task Management Web API built with .NET 10 following Clean Architecture principles.
 
 ## Project Structure
 
@@ -37,7 +37,7 @@ src/
 ## Getting Started
 
 ### Prerequisites
-- .NET 8 SDK or later
+- .NET 10 SDK or later
 - SQL Server (optional, for database functionality)
 
 ### Build the Solution
