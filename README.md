@@ -45,6 +45,15 @@ src/
 dotnet build
 ```
 
+### Apply Database Migrations
+
+Before running the API, apply the database migrations to create the schema:
+
+```bash
+cd src/TaskApi.API
+dotnet ef database update --project ../TaskApi.Infrastructure --startup-project .
+```
+
 ### Run the API
 ```bash
 cd src/TaskApi.API
@@ -67,8 +76,37 @@ Update the connection string in `src/TaskApi.API/appsettings.json`:
 
 ## Features
 
-- Clean Architecture structure
-- Swagger/OpenAPI documentation
-- RESTful API design
-- Dependency injection ready
-- Structured for scalability and maintainability
+- **Clean Architecture** - Proper separation of concerns with Domain, Application, Infrastructure, and API layers
+- **RESTful API** - Complete CRUD operations for task management
+- **Entity Framework Core** - Database access with Code-First approach
+- **SQL Server** - Relational database support
+- **Swagger/OpenAPI** - Interactive API documentation
+- **Dependency Injection** - Built-in .NET DI container
+- **Validation** - Model validation using Data Annotations
+- **Structured for scalability** - Easy to extend and maintain
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/tasks` | Get all tasks |
+| GET | `/api/tasks/{id}` | Get a specific task |
+| GET | `/api/tasks/completed` | Get all completed tasks |
+| GET | `/api/tasks/pending` | Get all pending tasks |
+| POST | `/api/tasks` | Create a new task |
+| PUT | `/api/tasks/{id}` | Update a task |
+| DELETE | `/api/tasks/{id}` | Delete a task |
+
+## Database Schema
+
+**Tasks Table:**
+- `Id` - int (Primary Key, Auto-increment)
+- `Title` - nvarchar(200) (Required)
+- `Description` - nvarchar(1000) (Optional)
+- `IsCompleted` - bit (Default: false)
+- `CreatedAt` - datetime2 (Default: GETUTCDATE())
+- `UpdatedAt` - datetime2 (Optional)
+
+## Testing
+
+See [TESTING.md](TESTING.md) for detailed testing instructions and API examples.

@@ -1,0 +1,14 @@
+using TaskApi.Application.DTOs;
+
+namespace TaskApi.Application.Interfaces;
+
+public interface ITaskService
+{
+    Task<TaskDto?> GetTaskByIdAsync(int id);
+    Task<IEnumerable<TaskDto>> GetAllTasksAsync();
+    Task<IEnumerable<TaskDto>> GetCompletedTasksAsync();
+    Task<IEnumerable<TaskDto>> GetPendingTasksAsync();
+    Task<TaskDto> CreateTaskAsync(CreateTaskDto createTaskDto);
+    Task<TaskDto?> UpdateTaskAsync(int id, UpdateTaskDto updateTaskDto);
+    Task<bool> DeleteTaskAsync(int id);
+}
