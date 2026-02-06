@@ -27,8 +27,7 @@ public class TaskEntityConfiguration : IEntityTypeConfiguration<TaskItem>
             .HasDefaultValue(false);
 
         builder.Property(t => t.CreatedAt)
-            .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .IsRequired();
 
         builder.Property(t => t.UpdatedAt)
             .IsRequired(false);
