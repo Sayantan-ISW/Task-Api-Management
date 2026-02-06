@@ -4,7 +4,7 @@ This document provides instructions for testing the Task Management API.
 
 ## Prerequisites
 
-- .NET 8 SDK installed
+- .NET 10 SDK installed
 - SQL Server (or SQL Server Express) installed and running
 - Valid SQL Server connection string
 
