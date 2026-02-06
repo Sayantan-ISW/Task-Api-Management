@@ -12,10 +12,13 @@ builder.Services.AddControllers();
 
 // Configure Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var databaseProvider = builder.Configuration.GetValue<string>("DatabaseProvider");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    // Use SQLite in development for easy testing
-    if (builder.Environment.IsDevelopment() && connectionString?.Contains("Data Source") == true)
+    // Explicitly check for SQLite provider or .db file extension in connection string
+    if (databaseProvider?.Equals("SQLite", StringComparison.OrdinalIgnoreCase) == true || 
+        (builder.Environment.IsDevelopment() && connectionString?.EndsWith(".db", StringComparison.OrdinalIgnoreCase) == true))
     {
         options.UseSqlite(connectionString);
     }

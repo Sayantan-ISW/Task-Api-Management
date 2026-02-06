@@ -26,6 +26,8 @@ public class TaskEntityConfiguration : IEntityTypeConfiguration<TaskItem>
             .IsRequired()
             .HasDefaultValue(false);
 
+        // CreatedAt is set by the application layer to ensure consistency across database providers
+        // (SQL Server would use GETUTCDATE(), SQLite uses datetime('now'), etc.)
         builder.Property(t => t.CreatedAt)
             .IsRequired();
 
